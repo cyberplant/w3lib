@@ -14,17 +14,25 @@ script: tox
 after_success:
   - codecov
 
+before_deploy: extras/build-packages.sh
+
 deploy:
-  provider: pypi
-  distributions: sdist bdist_wheel
-  user: scrapy
-  password:
-    secure: gIMpTo+g15n4fmR2Aw4X6GqCpkhd2NyLK0E1OzJVQqDMFD2e296I2MEWJQ5etKFYP+xABllMao9sO+pBKZLXvVilhHa1PCO5v9Mo3i9TDvszW+o9iW4ArrMRkfZR2+NV47vff1KUkBHFuqRkzOks/NS9wMG6A3MXAa4EFkH9UhI=
-  on:
-    tags: true
-    all_branches: true
-    repo: scrapy/w3lib
-    condition: "$TOXENV == py27"
+  - provider: bintray
+    file: extras/bintray.conf
+    user: luar
+    skip_cleanup: true
+    key:
+      secure: "aAPaz7Ts9bprXJtUodB8YDA44xv3myg3XQbDVhVx+CV/oum43lOzdVEOmVHRQKfyaSKFQFV1LOChZfk5gzJW/Ux9V6/EwMv1+UXmd4/1RT8LGMu7C5PPKs6gHL7AqtNNHYGEX2ehjU4MN+1CvoPXgkEiRgxLWlo5bH2zFzhpN3uNfEWTCQGDu41pDrxQlGU6HC22kKtVCpSm4GcMtPfJFTLNHfBF/f1FIGEfYU+d8S1dmHTR2RB+pcGzJRcptBnWIc2MvTz3JuGC+r48PPXGiRBc2jQ2eTu2Zz4OCcZLei9UU9gx4XQ5tL2n40MYTS/jOSLcNjJsoGDRtaA+VtaQ52MsEzfVLJIv6E2JS6P6/uKnYh1df1otQQ2Y2ukyvblJ7IlL9YbDGeNALukWb2XGk8xVMoP/0oLtMfje9DxxMxOw2+keI7vKDUEc4X/VaianinPY3+prU4C7/lUO4DSnAeFLQDNKSYjZt0fVfsbcNCEWityMph9goOvP9bdSsYVHDWP0aYEdV2oWxKPg6xt+neZJTenWBOFhderm0agxKemjaG0CJSoOvYRqbWh6jWJCBNiQw30VqcGsOQP3h4Vqs/Ef+B+HxI2Dds309tTud/whwNBe3sVUf/Bfqu52mZZB7bdfZ8+L2o7+fbQYUTmcI5DvFBAmaRy2ptEY5u/2t7E="
+  - provider: pypi
+    distributions: sdist bdist_wheel
+    user: scrapy
+    password:
+      secure: gIMpTo+g15n4fmR2Aw4X6GqCpkhd2NyLK0E1OzJVQqDMFD2e296I2MEWJQ5etKFYP+xABllMao9sO+pBKZLXvVilhHa1PCO5v9Mo3i9TDvszW+o9iW4ArrMRkfZR2+NV47vff1KUkBHFuqRkzOks/NS9wMG6A3MXAa4EFkH9UhI=
+    on:
+      tags: true
+      all_branches: true
+      repo: scrapy/w3lib
+      condition: "$TOXENV == py27"
 
 cache:
   directories:
